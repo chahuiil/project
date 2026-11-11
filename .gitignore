@@ -1,0 +1,4 @@
+# Local originals; publish the copies in assets/videos instead.
+/demo_table.mp4
+/demo_floor.mp4
+.DS_Store

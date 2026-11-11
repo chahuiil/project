@@ -73,6 +73,7 @@ h2 { font-size: 26px; line-height: 1.3; font-weight: 600; }
 .icon-button:disabled { opacity: .35; }
 .group-description { margin: 16px 0 20px; font-size: 14px; color: var(--muted); }
 .demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.demo-card:only-child { grid-column: 1 / -1; }
 .demo-media { aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--line); background: #fff; }
 .demo-topline { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; align-items: baseline; }
 .demo-topline h3 { font-size: 16px; font-weight: 600; }

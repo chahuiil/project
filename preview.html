@@ -82,6 +82,7 @@ h2 { font-size: 26px; line-height: 1.3; font-weight: 600; }
 .icon-button:disabled { opacity: .35; }
 .group-description { margin: 16px 0 20px; font-size: 14px; color: var(--muted); }
 .demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.demo-card:only-child { grid-column: 1 / -1; }
 .demo-media { aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--line); background: #fff; }
 .demo-topline { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; align-items: baseline; }
 .demo-topline h3 { font-size: 16px; font-weight: 600; }
@@ -176,18 +177,20 @@ window.PROJECT = {
   tldr: 'Add the one key idea you want visitors to remember about your paper.',
   abstract: 'Introduce the problem, explain the core idea of your approach, and summarize the main findings. Replace this text with your paper’s abstract when it is ready.',
   demoGroups: [
-    { name: 'Real-world', description: 'Show your method in action in the real world.', items: [
-      { title: 'Main demonstration', detail: 'Describe the task and experimental setting.', src: '', poster: '' },
-      { title: 'A second perspective', detail: 'Add another task, environment, or viewpoint.', src: '', poster: '' },
-      { title: 'Beyond the main setting', detail: 'Show additional experimental coverage.', src: '', poster: '' }
+    { name: 'Table', description: 'Table domain', items: [
+      { title: 'Table', detail: '', src: 'assets/videos/demo_table.mp4', poster: '' }
     ] },
-    { name: 'Simulation', description: 'Explore experiments in a controlled simulation environment.', items: [
-      { title: 'Simulation demonstration', detail: 'Describe the simulated environment and task.', src: '', poster: '' },
-      { title: 'Additional environment', detail: 'Add a second simulated setting.', src: '', poster: '' }
+    { name: 'Floor', description: 'Floor domain', items: [
+      { title: 'Floor', detail: '', src: 'assets/videos/demo_floor.mp4', poster: '' }
     ] },
-    { name: 'Comparisons', description: 'Compare methods under the same experimental conditions.', items: [
-      { title: 'Our method', detail: 'Add your method’s comparison video.', src: '', poster: '' },
-      { title: 'Baseline', detail: 'Add the corresponding baseline video.', src: '', poster: '' }
+    { name: 'Wall (high-height)', description: 'Wall domain (high-height)', items: [
+      { title: 'Wall (high-height)', detail: '', src: '', poster: '' }
+    ] },
+    { name: 'Wall (low-height)', description: 'Wall domain (low-height)', items: [
+      { title: 'Wall (low-height)', detail: '', src: '', poster: '' }
+    ] },
+    { name: 'Stair', description: 'Stair domain', items: [
+      { title: 'Stair', detail: '', src: '', poster: '' }
     ] }
   ],
   method: {
@@ -258,10 +261,15 @@ window.PROJECT = {
     const end = Math.min(start+size,g.items.length);
     g.items.slice(start,end).forEach((item,i) => {
       const card = el('article','demo-card'), frame = el('div','demo-media'), top = el('div','demo-topline'); frame.append(media(item));
-      top.append(el('h3','',item.title),el('span','',String(start+i+1).padStart(2,'0'))); card.append(frame,top,el('p','',item.detail)); $('demo-grid').append(card);
+      top.append(el('h3','',item.title));
+      if (g.items.length > 1) top.append(el('span','',String(start+i+1).padStart(2,'0')));
+      card.append(frame,top);
+      if (item.detail) card.append(el('p','',item.detail));
+      $('demo-grid').append(card);
     });
     set('group-description',g.description); set('gallery-counter',g.items.length ? `${start+1}${end > start+1 ? '–'+end : ''} / ${g.items.length}` : '0 / 0');
     $('previous').disabled = start === 0; $('next').disabled = end >= g.items.length;
+    document.querySelector('.gallery-controls').hidden = g.items.length <= size;
     document.querySelectorAll('.tab').forEach((t,i) => { t.setAttribute('aria-selected',String(i===group)); t.tabIndex = i===group ? 0 : -1; });
     $('demo-panel').setAttribute('aria-labelledby',`demo-tab-${group}`);
   }

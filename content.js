@@ -17,18 +17,20 @@ window.PROJECT = {
   tldr: 'Add the one key idea you want visitors to remember about your paper.',
   abstract: 'Introduce the problem, explain the core idea of your approach, and summarize the main findings. Replace this text with your paper’s abstract when it is ready.',
   demoGroups: [
-    { name: 'Real-world', description: 'Show your method in action in the real world.', items: [
-      { title: 'Main demonstration', detail: 'Describe the task and experimental setting.', src: '', poster: '' },
-      { title: 'A second perspective', detail: 'Add another task, environment, or viewpoint.', src: '', poster: '' },
-      { title: 'Beyond the main setting', detail: 'Show additional experimental coverage.', src: '', poster: '' }
+    { name: 'Table', description: 'Table domain', items: [
+      { title: 'Table', detail: '', src: 'assets/videos/demo_table.mp4', poster: '' }
     ] },
-    { name: 'Simulation', description: 'Explore experiments in a controlled simulation environment.', items: [
-      { title: 'Simulation demonstration', detail: 'Describe the simulated environment and task.', src: '', poster: '' },
-      { title: 'Additional environment', detail: 'Add a second simulated setting.', src: '', poster: '' }
+    { name: 'Floor', description: 'Floor domain', items: [
+      { title: 'Floor', detail: '', src: 'assets/videos/demo_floor.mp4', poster: '' }
     ] },
-    { name: 'Comparisons', description: 'Compare methods under the same experimental conditions.', items: [
-      { title: 'Our method', detail: 'Add your method’s comparison video.', src: '', poster: '' },
-      { title: 'Baseline', detail: 'Add the corresponding baseline video.', src: '', poster: '' }
+    { name: 'Wall (high-height)', description: 'Wall domain (high-height)', items: [
+      { title: 'Wall (high-height)', detail: '', src: '', poster: '' }
+    ] },
+    { name: 'Wall (low-height)', description: 'Wall domain (low-height)', items: [
+      { title: 'Wall (low-height)', detail: '', src: '', poster: '' }
+    ] },
+    { name: 'Stair', description: 'Stair domain', items: [
+      { title: 'Stair', detail: '', src: '', poster: '' }
     ] }
   ],
   method: {

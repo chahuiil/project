@@ -51,10 +51,15 @@
     const end = Math.min(start+size,g.items.length);
     g.items.slice(start,end).forEach((item,i) => {
       const card = el('article','demo-card'), frame = el('div','demo-media'), top = el('div','demo-topline'); frame.append(media(item));
-      top.append(el('h3','',item.title),el('span','',String(start+i+1).padStart(2,'0'))); card.append(frame,top,el('p','',item.detail)); $('demo-grid').append(card);
+      top.append(el('h3','',item.title));
+      if (g.items.length > 1) top.append(el('span','',String(start+i+1).padStart(2,'0')));
+      card.append(frame,top);
+      if (item.detail) card.append(el('p','',item.detail));
+      $('demo-grid').append(card);
     });
     set('group-description',g.description); set('gallery-counter',g.items.length ? `${start+1}${end > start+1 ? '–'+end : ''} / ${g.items.length}` : '0 / 0');
     $('previous').disabled = start === 0; $('next').disabled = end >= g.items.length;
+    document.querySelector('.gallery-controls').hidden = g.items.length <= size;
     document.querySelectorAll('.tab').forEach((t,i) => { t.setAttribute('aria-selected',String(i===group)); t.tabIndex = i===group ? 0 : -1; });
     $('demo-panel').setAttribute('aria-labelledby',`demo-tab-${group}`);
   }
