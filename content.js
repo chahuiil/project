@@ -12,7 +12,7 @@ window.PROJECT = {
     { name: 'Third Author', affiliation: '2', equal: false, url: '' }
   ],
   affiliations: ['Institution / Laboratory', 'Collaborating Institution'],
-  links: { paper: '', arxiv: '', code: '', video: '' },
+  links: { paper: '', arxiv: '', code: '' },
   teaser: { src: '', poster: '', caption: 'Add a short caption describing the main demonstration.' },
   tldr: 'Add the one key idea you want visitors to remember about your paper.',
   abstract: 'Introduce the problem, explain the core idea of your approach, and summarize the main findings. Replace this text with your paper’s abstract when it is ready.',

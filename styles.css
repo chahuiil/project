@@ -45,10 +45,12 @@ sup { font-size: .7em; margin-left: 3px; }
 .resource.available:hover { border-color: var(--accent); }
 .resource small { font-size: 12px; }
 .resource[aria-disabled=true] { color: var(--muted); }
-.teaser { overflow: hidden; border: 1px solid var(--line); background: #fff; aspect-ratio: 2.32; }
-.teaser video, .demo-media video { display: block; width: 100%; height: 100%; object-fit: contain; background: #fff; }
+.teaser { overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.teaser video, .demo-media video { display: block; width: 100%; height: auto; background: #fff; }
 .placeholder, .figure-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 24px; background: #fff; }
-.placeholder { height: 100%; width: 100%; }
+.placeholder { width: 100%; }
+.teaser > .placeholder { min-height: 200px; }
+.demo-media > .placeholder { min-height: 120px; }
 .placeholder-title { font-size: 18px; font-weight: 400; color: var(--muted); }
 .placeholder-note { max-width: 420px; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .media-caption { padding-top: 12px; font-size: 14px; color: var(--muted); }
@@ -68,7 +70,7 @@ h2 { font-size: 26px; line-height: 1.3; font-weight: 600; }
 .demo-domain { min-width: 0; }
 .demo-domain-title { margin-bottom: 16px; font-size: 18px; font-weight: 600; }
 .demo-media + .demo-media { margin-top: 24px; }
-.demo-media { aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.demo-media { overflow: hidden; border: 1px solid var(--line); background: #fff; }
 .figure-panel { overflow: hidden; }
 .figure-placeholder { min-height: 240px; border: 1px solid var(--line); }
 .figure-panel figcaption { padding: 12px 0; font-size: 14px; color: var(--muted); }
@@ -102,7 +104,6 @@ dialog .icon-button { position: absolute; right: 10px; top: 8px; }
   .hero { padding-top: 24px; padding-bottom: 28px; }
   .subtitle { font-size: 15px; }
   .authors { gap: 8px 14px; font-size: 15px; }
-  .teaser { aspect-ratio: 1.5; }
   .section { padding-top: 36px; padding-bottom: 16px; }
   h2 { font-size: 24px; }
   .method-steps { grid-template-columns: 1fr; }

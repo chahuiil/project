@@ -41,7 +41,7 @@
   }
   p.affiliations.forEach((name, i) => { const n = el('span'); n.append(el('sup', '', String(i + 1)), document.createTextNode(` ${name}`)); $('affiliations').append(n); });
   $('equal-note').hidden = !p.authors.some(a => a.equal);
-  [['paper','Paper'], ['arxiv','arXiv'], ['code','Code'], ['video','Video']].forEach(([key, name]) => {
+  [['paper','Paper'], ['arxiv','arXiv'], ['code','Code']].forEach(([key, name]) => {
     const url = safeURL(p.links[key]); const a = el(url ? 'a' : 'span', `resource${url ? ' available' : ''}`);
     a.append(document.createTextNode(name));
     if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
