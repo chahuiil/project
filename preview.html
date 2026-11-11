@@ -70,24 +70,14 @@ h2 { font-size: 26px; line-height: 1.3; font-weight: 600; }
 .body-copy { margin-top: 16px; line-height: 1.8; white-space: pre-line; }
 .section-heading { margin-bottom: 24px; }
 .section-aside { margin-top: 12px; color: var(--muted); }
-.gallery-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
-.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
-.tab { border: 1px solid transparent; border-radius: 3px; background: #fff; color: var(--muted); padding: 7px 12px; font-size: 14px; }
-.tab[aria-selected=true] { border-color: var(--ink); color: var(--ink); font-weight: 600; }
-.tab:hover { text-decoration: underline; }
-.gallery-controls { display: flex; align-items: center; gap: 8px; }
-.gallery-controls > span { font-size: 13px; color: var(--muted); white-space: nowrap; margin-right: 4px; }
 .icon-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: var(--ink); font-size: 18px; display: grid; place-items: center; }
 .icon-button:hover:not(:disabled), .copy-button:hover:not(:disabled) { border-color: var(--ink); }
 .icon-button:disabled { opacity: .35; }
-.group-description { margin: 16px 0 20px; font-size: 14px; color: var(--muted); }
-.demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.demo-card:only-child { grid-column: 1 / -1; }
+.demo-domains { display: flex; flex-direction: column; gap: 40px; }
+.demo-domain { min-width: 0; }
+.demo-domain-title { margin-bottom: 16px; font-size: 18px; font-weight: 600; }
+.demo-media + .demo-media { margin-top: 24px; }
 .demo-media { aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--line); background: #fff; }
-.demo-topline { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; align-items: baseline; }
-.demo-topline h3 { font-size: 16px; font-weight: 600; }
-.demo-topline span { font-size: 13px; color: var(--muted); }
-.demo-card > p { margin-top: 6px; font-size: 14px; color: var(--muted); }
 .figure-panel { overflow: hidden; }
 .figure-placeholder { min-height: 240px; border: 1px solid var(--line); }
 .figure-panel figcaption { padding: 12px 0; font-size: 14px; color: var(--muted); }
@@ -124,9 +114,7 @@ dialog .icon-button { position: absolute; right: 10px; top: 8px; }
   .teaser { aspect-ratio: 1.5; }
   .section { padding-top: 36px; padding-bottom: 16px; }
   h2 { font-size: 24px; }
-  .gallery-toolbar { flex-wrap: wrap; }
-  .gallery-controls { margin-left: auto; }
-  .demo-grid, .method-steps { grid-template-columns: 1fr; }
+  .method-steps { grid-template-columns: 1fr; }
   .figure-placeholder { min-height: 200px; }
   .citation-section { padding-bottom: 36px; }
   footer { align-items: flex-start; flex-wrap: wrap; }
@@ -149,7 +137,12 @@ dialog .icon-button { position: absolute; right: 10px; top: 8px; }
     </section>
     <section class="teaser-section wrap" aria-label="Project teaser"><div id="teaser" class="teaser"></div><div class="media-caption"><p id="teaser-caption"></p></div></section>
     <section id="overview" class="wrap overview section"><div><div class="takeaway"><span class="takeaway-label">TL;DR: </span><p id="tldr"></p></div><h2>Abstract</h2><p class="body-copy" id="abstract"></p></div></section>
-    <section id="demos" class="demos-section section"><div class="wrap"><div class="section-heading"><div><h2>Demonstrations</h2></div></div><div class="gallery-toolbar"><div class="tabs" id="demo-tabs" role="tablist" aria-label="Demonstration categories"></div><div class="gallery-controls"><span id="gallery-counter" aria-live="polite"></span><button id="previous" class="icon-button" aria-label="Previous demonstration">←</button><button id="next" class="icon-button" aria-label="Next demonstration">→</button></div></div><p id="group-description" class="group-description"></p><div id="demo-panel" role="tabpanel" tabindex="0"><div class="demo-grid" id="demo-grid"></div></div></div></section>
+    <section id="demos" class="demos-section section">
+      <div class="wrap">
+        <div class="section-heading"><h2>Demonstrations</h2></div>
+        <div id="demo-domains" class="demo-domains"></div>
+      </div>
+    </section>
     <section id="method" class="wrap section"><div class="section-heading"><div><h2>Method</h2></div><p id="method-intro" class="section-aside wide"></p></div><figure class="figure-panel" id="method-figure"></figure><div id="method-steps" class="method-steps"></div></section>
     <section id="results" class="wrap section results-section"><div class="section-heading"><div><h2>Results</h2></div><p id="results-text" class="section-aside wide"></p></div><figure class="figure-panel" id="results-figure"></figure></section>
     <section id="citation" class="wrap section citation-section"><div><h2>Citation</h2><p class="body-copy">Citation details will be available with the paper.</p></div><div class="citation-box"><div class="citation-toolbar"><span>BibTeX</span><button id="copy-citation" class="copy-button">Copy citation</button></div><pre><code id="bibtex"></code></pre><p id="copy-status" role="status" class="sr-only"></p></div></section>
@@ -224,8 +217,17 @@ window.PROJECT = {
     return n;
   }
   function media(item, hero = false) {
-    if (!safeURL(item.src)) return placeholder(hero ? 'Project video' : item.title, hero ? 'Add your project’s main video here.' : 'Video coming soon.');
+    if (!safeURL(item.src)) {
+      if (hero) return placeholder('Project video', 'Add your project’s main video here.');
+      const empty = el('div', 'placeholder');
+      empty.append(el('p', 'placeholder-note', 'Video coming soon.'));
+      return empty;
+    }
     const v = el('video'); v.src = safeURL(item.src); v.controls = true; v.playsInline = true; v.preload = 'metadata';
+    if (!hero) {
+      v.muted = true; v.defaultMuted = true; v.autoplay = true; v.loop = true;
+      v.defaultPlaybackRate = 1; v.playbackRate = 1;
+    }
     if (safeURL(item.poster)) v.poster = safeURL(item.poster);
     v.setAttribute('aria-label', item.title || 'Project teaser video');
     v.addEventListener('error', () => v.replaceWith(el('p','media-error','This video could not be loaded. Please check the file path and format.')), { once: true });
@@ -250,41 +252,24 @@ window.PROJECT = {
     $('resource-links').append(a);
   });
   $('teaser').append(media(p.teaser, true)); set('teaser-caption',p.teaser.caption); set('tldr',p.tldr); set('abstract',p.abstract);
-  let group = 0, start = 0;
-  const mq = window.matchMedia('(max-width:700px)');
-  const pageSize = () => mq.matches ? 1 : 2;
-  function renderGallery() {
-    if (!p.demoGroups.length) return;
-    const g = p.demoGroups[group], size = pageSize();
-    start = Math.min(start, Math.max(0,g.items.length-size));
-    $('demo-grid').replaceChildren();
-    const end = Math.min(start+size,g.items.length);
-    g.items.slice(start,end).forEach((item,i) => {
-      const card = el('article','demo-card'), frame = el('div','demo-media'), top = el('div','demo-topline'); frame.append(media(item));
-      top.append(el('h3','',item.title));
-      if (g.items.length > 1) top.append(el('span','',String(start+i+1).padStart(2,'0')));
-      card.append(frame,top);
-      if (item.detail) card.append(el('p','',item.detail));
-      $('demo-grid').append(card);
+  p.demoGroups.forEach((group, index) => {
+    const section = el('section', 'demo-domain');
+    const heading = el('h3', 'demo-domain-title', `${group.name} domain (x1)`);
+    heading.id = `demo-domain-${index}`;
+    section.setAttribute('aria-labelledby', heading.id);
+    section.append(heading);
+    group.items.forEach(item => {
+      const frame = el('div', 'demo-media');
+      frame.append(media(item));
+      section.append(frame);
     });
-    set('group-description',g.description); set('gallery-counter',g.items.length ? `${start+1}${end > start+1 ? '–'+end : ''} / ${g.items.length}` : '0 / 0');
-    $('previous').disabled = start === 0; $('next').disabled = end >= g.items.length;
-    document.querySelector('.gallery-controls').hidden = g.items.length <= size;
-    document.querySelectorAll('.tab').forEach((t,i) => { t.setAttribute('aria-selected',String(i===group)); t.tabIndex = i===group ? 0 : -1; });
-    $('demo-panel').setAttribute('aria-labelledby',`demo-tab-${group}`);
-  }
-  p.demoGroups.forEach((g,i) => {
-    const b = el('button','tab',g.name); b.id = `demo-tab-${i}`; b.setAttribute('role','tab'); b.setAttribute('aria-controls','demo-panel');
-    b.addEventListener('click',() => { group=i; start=0; renderGallery(); });
-    b.addEventListener('keydown',e => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
-      e.preventDefault(); const count=p.demoGroups.length; group=e.key==='Home' ? 0 : e.key==='End' ? count-1 : (i+(e.key==='ArrowRight'?1:-1)+count)%count;
-      start=0; renderGallery(); $(`demo-tab-${group}`).focus();
-    }); $('demo-tabs').append(b);
+    $('demo-domains').append(section);
   });
-  $('previous').onclick=()=>{start=Math.max(0,start-pageSize());renderGallery();};
-  $('next').onclick=()=>{start+=pageSize();renderGallery();}; mq.addEventListener('change',renderGallery);
-  if (p.demoGroups.length) renderGallery(); else $('demos').hidden=true;
+  $('demos').hidden = !p.demoGroups.length;
+  document.querySelectorAll('#demos video').forEach(video => {
+    // Keep the native controls available if the browser blocks autoplay.
+    video.play().catch(() => {});
+  });
   let imageTrigger;
   function figure(id, data, isMethod) {
     const container=$(id);

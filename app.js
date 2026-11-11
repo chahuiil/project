@@ -14,8 +14,17 @@
     return n;
   }
   function media(item, hero = false) {
-    if (!safeURL(item.src)) return placeholder(hero ? 'Project video' : item.title, hero ? 'Add your project’s main video here.' : 'Video coming soon.');
+    if (!safeURL(item.src)) {
+      if (hero) return placeholder('Project video', 'Add your project’s main video here.');
+      const empty = el('div', 'placeholder');
+      empty.append(el('p', 'placeholder-note', 'Video coming soon.'));
+      return empty;
+    }
     const v = el('video'); v.src = safeURL(item.src); v.controls = true; v.playsInline = true; v.preload = 'metadata';
+    if (!hero) {
+      v.muted = true; v.defaultMuted = true; v.autoplay = true; v.loop = true;
+      v.defaultPlaybackRate = 1; v.playbackRate = 1;
+    }
     if (safeURL(item.poster)) v.poster = safeURL(item.poster);
     v.setAttribute('aria-label', item.title || 'Project teaser video');
     v.addEventListener('error', () => v.replaceWith(el('p','media-error','This video could not be loaded. Please check the file path and format.')), { once: true });
@@ -40,41 +49,24 @@
     $('resource-links').append(a);
   });
   $('teaser').append(media(p.teaser, true)); set('teaser-caption',p.teaser.caption); set('tldr',p.tldr); set('abstract',p.abstract);
-  let group = 0, start = 0;
-  const mq = window.matchMedia('(max-width:700px)');
-  const pageSize = () => mq.matches ? 1 : 2;
-  function renderGallery() {
-    if (!p.demoGroups.length) return;
-    const g = p.demoGroups[group], size = pageSize();
-    start = Math.min(start, Math.max(0,g.items.length-size));
-    $('demo-grid').replaceChildren();
-    const end = Math.min(start+size,g.items.length);
-    g.items.slice(start,end).forEach((item,i) => {
-      const card = el('article','demo-card'), frame = el('div','demo-media'), top = el('div','demo-topline'); frame.append(media(item));
-      top.append(el('h3','',item.title));
-      if (g.items.length > 1) top.append(el('span','',String(start+i+1).padStart(2,'0')));
-      card.append(frame,top);
-      if (item.detail) card.append(el('p','',item.detail));
-      $('demo-grid').append(card);
+  p.demoGroups.forEach((group, index) => {
+    const section = el('section', 'demo-domain');
+    const heading = el('h3', 'demo-domain-title', `${group.name} domain (x1)`);
+    heading.id = `demo-domain-${index}`;
+    section.setAttribute('aria-labelledby', heading.id);
+    section.append(heading);
+    group.items.forEach(item => {
+      const frame = el('div', 'demo-media');
+      frame.append(media(item));
+      section.append(frame);
     });
-    set('group-description',g.description); set('gallery-counter',g.items.length ? `${start+1}${end > start+1 ? '–'+end : ''} / ${g.items.length}` : '0 / 0');
-    $('previous').disabled = start === 0; $('next').disabled = end >= g.items.length;
-    document.querySelector('.gallery-controls').hidden = g.items.length <= size;
-    document.querySelectorAll('.tab').forEach((t,i) => { t.setAttribute('aria-selected',String(i===group)); t.tabIndex = i===group ? 0 : -1; });
-    $('demo-panel').setAttribute('aria-labelledby',`demo-tab-${group}`);
-  }
-  p.demoGroups.forEach((g,i) => {
-    const b = el('button','tab',g.name); b.id = `demo-tab-${i}`; b.setAttribute('role','tab'); b.setAttribute('aria-controls','demo-panel');
-    b.addEventListener('click',() => { group=i; start=0; renderGallery(); });
-    b.addEventListener('keydown',e => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
-      e.preventDefault(); const count=p.demoGroups.length; group=e.key==='Home' ? 0 : e.key==='End' ? count-1 : (i+(e.key==='ArrowRight'?1:-1)+count)%count;
-      start=0; renderGallery(); $(`demo-tab-${group}`).focus();
-    }); $('demo-tabs').append(b);
+    $('demo-domains').append(section);
   });
-  $('previous').onclick=()=>{start=Math.max(0,start-pageSize());renderGallery();};
-  $('next').onclick=()=>{start+=pageSize();renderGallery();}; mq.addEventListener('change',renderGallery);
-  if (p.demoGroups.length) renderGallery(); else $('demos').hidden=true;
+  $('demos').hidden = !p.demoGroups.length;
+  document.querySelectorAll('#demos video').forEach(video => {
+    // Keep the native controls available if the browser blocks autoplay.
+    video.play().catch(() => {});
+  });
   let imageTrigger;
   function figure(id, data, isMethod) {
     const container=$(id);
