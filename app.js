@@ -8,13 +8,13 @@
     if (!value || typeof value !== 'string') return '';
     try { const u = new URL(value, location.href); return ['http:', 'https:', 'file:'].includes(u.protocol) ? value : ''; } catch { return ''; }
   }
-  function placeholder(title, note, label = 'MEDIA PLACEHOLDER') {
+  function placeholder(title, note) {
     const n = el('div', 'placeholder');
-    n.append(el('span', 'placeholder-label', label), el('span', 'placeholder-kicker', 'A SPACE FOR YOUR RESEARCH'), el('h3', 'placeholder-title', title), el('p', 'placeholder-note', note), el('span', 'placeholder-corner', 'CONTENT COMING SOON →'));
+    n.append(el('p', 'placeholder-title', title), el('p', 'placeholder-note', note));
     return n;
   }
   function media(item, hero = false) {
-    if (!safeURL(item.src)) return placeholder(hero ? 'Your research, in motion.' : item.title, hero ? 'Add your project’s main video here.' : 'Add an experiment video to bring this section to life.');
+    if (!safeURL(item.src)) return placeholder(hero ? 'Project video' : item.title, hero ? 'Add your project’s main video here.' : 'Video coming soon.');
     const v = el('video'); v.src = safeURL(item.src); v.controls = true; v.playsInline = true; v.preload = 'metadata';
     if (safeURL(item.poster)) v.poster = safeURL(item.poster);
     v.setAttribute('aria-label', item.title || 'Project teaser video');
@@ -23,7 +23,7 @@
   }
   document.title = `${p.name} — ${p.title}`;
   document.querySelector('meta[name="description"]').content = p.subtitle;
-  set('brand-name', p.name); set('project-name', p.name); set('paper-title', p.title); set('subtitle', p.subtitle); set('venue', p.venue);
+  set('project-name', p.name); set('paper-title', p.title); set('subtitle', p.subtitle); set('venue', p.venue);
   $('draft-tag').hidden = !p.draft;
   for (const a of p.authors) {
     const n = safeURL(a.url) ? el('a', '', a.name) : el('span', '', a.name);
@@ -32,9 +32,9 @@
   }
   p.affiliations.forEach((name, i) => { const n = el('span'); n.append(el('sup', '', String(i + 1)), document.createTextNode(` ${name}`)); $('affiliations').append(n); });
   $('equal-note').hidden = !p.authors.some(a => a.equal);
-  [['paper','Paper','→'], ['arxiv','arXiv','→'], ['code','Code','⌘'], ['video','Video','▷']].forEach(([key, name, icon]) => {
+  [['paper','Paper'], ['arxiv','arXiv'], ['code','Code'], ['video','Video']].forEach(([key, name]) => {
     const url = safeURL(p.links[key]); const a = el(url ? 'a' : 'span', `resource${url ? ' available' : ''}`);
-    const s = el('span', '', icon); s.setAttribute('aria-hidden','true'); a.append(s, document.createTextNode(name));
+    a.append(document.createTextNode(name));
     if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
     else { a.setAttribute('aria-disabled', 'true'); a.append(el('small', '', 'Soon')); }
     $('resource-links').append(a);
@@ -78,15 +78,14 @@
       b.onclick=()=>{imageTrigger=b;$('dialog-image').src=img.src;$('dialog-image').alt=img.alt;$('image-dialog').showModal();};
       img.onerror=()=>b.replaceWith(el('p','media-error','This figure could not be loaded. Please check its file path.'));container.append(b);
     } else {
-      const n=el('div','figure-placeholder');n.append(el('span','placeholder-kicker',isMethod?'METHOD FIGURE PLACEHOLDER':'RESULTS FIGURE PLACEHOLDER'));
-      if(isMethod){const flow=el('div','pipeline');flow.append(el('span','','Input'),el('b','','→'),el('span','','Your method'),el('b','','→'),el('span','','Output'));n.append(flow,el('p','placeholder-note','Layout example only · replace with your method figure.'));}
-      else n.append(el('div','results-placeholder-icon','[ Figure ]'),el('p','placeholder-note','Your results plot or comparison table belongs here.'));
+      const n=el('div','figure-placeholder');
+      n.append(el('p','placeholder-title',isMethod ? 'Method overview' : 'Experimental results'),el('p','placeholder-note','Figure coming soon.'));
       container.append(n);
     }
     container.append(el('figcaption','',data.caption));
   }
   set('method-intro',p.method.intro);figure('method-figure',p.method,true);set('results-text',p.results.text);figure('results-figure',p.results,false);
-  p.method.steps.forEach((s,i)=>{const n=el('article','method-step');n.append(el('span','step-number',String(i+1).padStart(2,'0')),el('h3','',s.title),el('p','',s.text));$('method-steps').append(n);});
+  p.method.steps.forEach(s=>{const n=el('article','method-step');n.append(el('h3','',s.title),el('p','',s.text));$('method-steps').append(n);});
   $('close-dialog').onclick=()=>$('image-dialog').close();
   $('image-dialog').addEventListener('click',e=>{if(e.target===$('image-dialog'))$('image-dialog').close();});
   $('image-dialog').addEventListener('close',()=>imageTrigger?.focus());

@@ -4,31 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Research project page — content coming soon.">
-  <meta name="theme-color" content="#f9faf7">
+  <meta name="theme-color" content="#ffffff">
   <title>Research Project</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="content.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="site-header"><a class="brand" href="#" aria-label="Back to top"><span class="brand-mark" aria-hidden="true">✳</span><span id="brand-name">PROJECT</span></a><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#demos">Demos</a><a href="#method">Method</a><a href="#citation">Citation <span aria-hidden="true">→</span></a></nav></header>
+  <header class="site-header"><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#demos">Demos</a><a href="#method">Method</a><a href="#citation">Citation</a></nav></header>
   <main id="main">
     <section class="hero wrap" aria-labelledby="project-name">
-      <p class="eyebrow"><span class="status-dot"></span><span id="venue"></span><span class="draft-tag" id="draft-tag">DRAFT TEMPLATE</span></p>
+      <p class="venue"><span id="venue"></span><span class="draft-tag" id="draft-tag">Draft</span></p>
       <h1 id="project-name"></h1><p class="paper-title" id="paper-title"></p><p class="subtitle" id="subtitle"></p>
       <div class="authors" id="authors"></div><div class="affiliations" id="affiliations"></div><p class="equal" id="equal-note">* Equal contribution</p>
       <div class="resource-links" id="resource-links" aria-label="Project resources"></div>
     </section>
-    <section class="teaser-section wrap" aria-label="Project teaser"><div id="teaser" class="teaser"></div><div class="media-caption"><span class="caption-label">PROJECT TEASER</span><p id="teaser-caption"></p></div></section>
-    <section id="overview" class="wrap overview section"><div class="section-label">01 / OVERVIEW</div><div><div class="takeaway"><span class="eyebrow">THE SHORT VERSION</span><p id="tldr"></p></div><h2>Abstract</h2><p class="body-copy" id="abstract"></p></div></section>
-    <section id="demos" class="demos-section section"><div class="wrap"><div class="section-heading"><div><div class="section-label">02 / DEMONSTRATIONS</div><h2>See it in action.</h2></div><p class="section-aside">From the first experiment<br>to the real world.</p></div><div class="gallery-toolbar"><div class="tabs" id="demo-tabs" role="tablist" aria-label="Demonstration categories"></div><div class="gallery-controls"><span id="gallery-counter" aria-live="polite"></span><button id="previous" class="icon-button" aria-label="Previous demonstration">←</button><button id="next" class="icon-button" aria-label="Next demonstration">→</button></div></div><p id="group-description" class="group-description"></p><div id="demo-panel" role="tabpanel" tabindex="0"><div class="demo-grid" id="demo-grid"></div></div></div></section>
-    <section id="method" class="wrap section"><div class="section-heading"><div><div class="section-label">03 / APPROACH</div><h2>The idea behind it.</h2></div><p id="method-intro" class="section-aside wide"></p></div><figure class="figure-panel" id="method-figure"></figure><div id="method-steps" class="method-steps"></div></section>
-    <section id="results" class="wrap section results-section"><div class="section-heading"><div><div class="section-label">04 / EVALUATION</div><h2>Evidence, in detail.</h2></div><p id="results-text" class="section-aside wide"></p></div><figure class="figure-panel" id="results-figure"></figure></section>
-    <section id="citation" class="wrap section citation-section"><div><div class="section-label">05 / CITATION</div><h2>Build on this work.</h2><p class="body-copy">Citation details will be available<br>with the paper.</p></div><div class="citation-box"><div class="citation-toolbar"><span>BibTeX</span><button id="copy-citation" class="copy-button">Copy citation</button></div><pre><code id="bibtex"></code></pre><p id="copy-status" role="status" class="sr-only"></p></div></section>
+    <section class="teaser-section wrap" aria-label="Project teaser"><div id="teaser" class="teaser"></div><div class="media-caption"><p id="teaser-caption"></p></div></section>
+    <section id="overview" class="wrap overview section"><div><div class="takeaway"><span class="takeaway-label">TL;DR: </span><p id="tldr"></p></div><h2>Abstract</h2><p class="body-copy" id="abstract"></p></div></section>
+    <section id="demos" class="demos-section section"><div class="wrap"><div class="section-heading"><div><h2>Demonstrations</h2></div></div><div class="gallery-toolbar"><div class="tabs" id="demo-tabs" role="tablist" aria-label="Demonstration categories"></div><div class="gallery-controls"><span id="gallery-counter" aria-live="polite"></span><button id="previous" class="icon-button" aria-label="Previous demonstration">←</button><button id="next" class="icon-button" aria-label="Next demonstration">→</button></div></div><p id="group-description" class="group-description"></p><div id="demo-panel" role="tabpanel" tabindex="0"><div class="demo-grid" id="demo-grid"></div></div></div></section>
+    <section id="method" class="wrap section"><div class="section-heading"><div><h2>Method</h2></div><p id="method-intro" class="section-aside wide"></p></div><figure class="figure-panel" id="method-figure"></figure><div id="method-steps" class="method-steps"></div></section>
+    <section id="results" class="wrap section results-section"><div class="section-heading"><div><h2>Results</h2></div><p id="results-text" class="section-aside wide"></p></div><figure class="figure-panel" id="results-figure"></figure></section>
+    <section id="citation" class="wrap section citation-section"><div><h2>Citation</h2><p class="body-copy">Citation details will be available with the paper.</p></div><div class="citation-box"><div class="citation-toolbar"><span>BibTeX</span><button id="copy-citation" class="copy-button">Copy citation</button></div><pre><code id="bibtex"></code></pre><p id="copy-status" role="status" class="sr-only"></p></div></section>
   </main>
-  <footer class="wrap"><div><span class="brand-mark" aria-hidden="true">✳</span><span id="footer-text"></span></div><a href="#">Back to top ↑</a></footer>
+  <footer class="wrap"><div><span id="footer-text"></span></div><a href="#">Back to top ↑</a></footer>
   <dialog id="image-dialog"><button id="close-dialog" class="icon-button" aria-label="Close enlarged figure">×</button><img id="dialog-image" alt=""></dialog>
   <noscript><p class="noscript">Please enable JavaScript to load the project information.</p></noscript>
 </body>

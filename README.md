@@ -6,7 +6,7 @@ FlashSAC의 논문 정보 → 영상 → 연구 설명 흐름을 참고해 새�
 
 ## 1. 바로 보기
 
-압축을 풀고 `index.html`을 브라우저로 여세요. 별도 설치나 빌드 없이 동작합니다. 전달용 `preview.html`은 최초 버전의 독립형 미리보기입니다. **수정 결과는 index.html에서 확인하세요.** preview.html은 자동 갱신되지 않습니다.
+압축을 풀고 `index.html`을 브라우저로 여세요. 별도 설치나 빌드 없이 동작합니다. 전달용 `preview.html`은 현재 디자인을 반영한 독립형 미리보기입니다. **수정 결과는 index.html에서 확인하세요.** preview.html은 자동 갱신되지 않습니다.
 
 VS Code의 Live Server를 사용해도 됩니다. Python이 있다면 프로젝트 폴더에서:
 
@@ -27,9 +27,9 @@ python3 -m http.server 8000
 | `assets/` | 그림, 동영상, PDF 등 게시할 파일 |
 | `.github/workflows/pages.yml` | main에 변경사항을 올리면 GitHub Pages로 배포 |
 | `.nojekyll` | 정적 파일 표시를 위한 설정 |
-| `preview.html` | 최초 제작 버전의 독립형 미리보기 |
+| `preview.html` | 현재 디자인의 독립형 미리보기 |
 
-외부 폰트, 추적 코드, 프레임워크, 패키지 설치는 사용하지 않습니다. 게시 경로는 모두 상대 경로이므로 `계정.github.io/저장소명/`에서 동작합니다.
+흰색 배경과 기본 시스템 글꼴을 사용하며, 로고와 장식 패턴 없이 논문 내용을 중심으로 구성했습니다. 외부 폰트, 추적 코드, 프레임워크, 패키지 설치는 사용하지 않습니다. 게시 경로는 모두 상대 경로이므로 `계정.github.io/저장소명/`에서 동작합니다.
 
 ## 3. 실제 논문 정보 넣기
 
@@ -47,7 +47,7 @@ python3 -m http.server 8000
 - `method`: 연구 방법 소개, 그림, 설명, 기여 항목
 - `results`: 실험 결과 그림과 설명
 - `bibtex`: 인용 정보. 비어 있으면 복사 버튼 비활성화
-- `draft`: 내용을 모두 교체한 뒤 `false`로 바꾸면 DRAFT TEMPLATE 표시가 사라집니다. placeholder 문구 자체를 자동 삭제하지는 않습니다.
+- `draft`: 내용을 모두 교체한 뒤 `false`로 바꾸면 Draft 표시가 사라집니다. placeholder 문구 자체를 자동 삭제하지는 않습니다.
 - `footer`: 하단에 넣을 프로젝트명 또는 저작권 문구
 
 ### 영상 예시
@@ -139,7 +139,7 @@ git push -u origin update-results
 
 > assets/videos에 추가한 MP4를 Real-world 실험 갤러리에 넣고 캡션을 달아줘.
 
-> 현재 반응형 레이아웃을 유지하면서 청록색 포인트를 남색으로 바꿔줘.
+> 현재 반응형 레이아웃을 유지하면서 파란색 링크를 남색으로 바꿔줘.
 
 ## 공식 안내
 
