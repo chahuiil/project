@@ -51,7 +51,7 @@
   $('teaser').append(media(p.teaser, true)); set('teaser-caption',p.teaser.caption); set('tldr',p.tldr); set('abstract',p.abstract);
   p.demoGroups.forEach((group, index) => {
     const section = el('section', 'demo-domain');
-    const heading = el('h3', 'demo-domain-title', `${group.name} domain (x1)`);
+    const heading = el('h3', 'demo-domain-title', group.heading || `${group.name} domain (x1)`);
     heading.id = `demo-domain-${index}`;
     section.setAttribute('aria-labelledby', heading.id);
     section.append(heading);

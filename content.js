@@ -18,7 +18,7 @@ window.PROJECT = {
   abstract: 'Introduce the problem, explain the core idea of your approach, and summarize the main findings. Replace this text with your paper’s abstract when it is ready.',
   demoGroups: [
     { name: 'Table', description: 'Table domain', items: [
-      { title: 'Table', detail: '', src: 'assets/videos/demo_table_modifed.mp4', poster: '' }
+      { title: 'Table', detail: '', src: 'assets/videos/demo_table_modifed_new.mp4', poster: '' }
     ] },
     { name: 'Floor', description: 'Floor domain', items: [
       { title: 'Floor', detail: '', src: 'assets/videos/demo_floor.mp4', poster: '' }
@@ -33,6 +33,9 @@ window.PROJECT = {
       { title: 'Stair tread 0', detail: '', src: 'assets/videos/demo_stair_tread0.mp4', poster: '' },
       { title: 'Stair tread 1', detail: '', src: 'assets/videos/demo_stair_tread1.mp4', poster: '' },
       { title: 'Stair riser 1', detail: '', src: 'assets/videos/demo_stair_riser1.mp4', poster: '' }
+    ] },
+    { name: 'VLM integration', heading: 'VLM integration: erase blue region (x1)', items: [
+      { title: 'VLM integration: erase blue region', detail: '', src: 'assets/videos/demo_vlm_integration_erase_blue_region.mp4', poster: '' }
     ] }
   ],
   method: {
